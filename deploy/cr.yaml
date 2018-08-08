@@ -1,0 +1,4 @@
+apiVersion: "kube-scheduler.operator.k8s.io/v1alpha1"
+kind: "KubeScheduler"
+metadata:
+  name: "example"

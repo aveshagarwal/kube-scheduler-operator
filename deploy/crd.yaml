@@ -1,0 +1,13 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: kubeschedulers.kube-scheduler.operator.k8s.io
+spec:
+  group: kube-scheduler.operator.k8s.io
+  names:
+    kind: KubeScheduler
+    listKind: KubeSchedulerList
+    plural: kubeschedulers
+    singular: kubescheduler
+  scope: Namespaced
+  version: v1alpha1
