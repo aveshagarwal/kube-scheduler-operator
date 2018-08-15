@@ -24,27 +24,27 @@ type Handler struct {
 func (h *Handler) Handle(ctx context.Context, event sdk.Event) error {
 	switch o := event.Object.(type) {
 	case *v1alpha1.KubeScheduler:
-		err := sdk.Create(newbusyBoxPod(o))
+		err := sdk.Create(newKubeSchedulerPod(o))
 		if err != nil && !errors.IsAlreadyExists(err) {
-			logrus.Errorf("Failed to create busybox pod : %v", err)
+			logrus.Errorf("Failed to create kube-scheduler pod : %v", err)
 			return err
 		}
 	}
 	return nil
 }
 
-// newbusyBoxPod demonstrates how to create a busybox pod
-func newbusyBoxPod(cr *v1alpha1.KubeScheduler) *corev1.Pod {
-	labels := map[string]string{
+// newKubeSchedulerPod creates kube-scheduler
+func newKubeSchedulerPod(cr *v1alpha1.KubeScheduler) *corev1.Pod {
+	/*labels := map[string]string{
 		"app": "busy-box",
-	}
+	}*/
 	return &corev1.Pod{
 		TypeMeta: metav1.TypeMeta{
 			Kind:       "Pod",
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "busy-box",
+			Name:      "kube-scheduler-pod",
 			Namespace: cr.Namespace,
 			OwnerReferences: []metav1.OwnerReference{
 				*metav1.NewControllerRef(cr, schema.GroupVersionKind{
@@ -53,14 +53,14 @@ func newbusyBoxPod(cr *v1alpha1.KubeScheduler) *corev1.Pod {
 					Kind:    "KubeScheduler",
 				}),
 			},
-			Labels: labels,
+			//Labels: labels,
 		},
 		Spec: corev1.PodSpec{
 			Containers: []corev1.Container{
 				{
-					Name:    "busybox",
-					Image:   "busybox",
-					Command: []string{"sleep", "3600"},
+					Name:    "kubescheduler-container",
+					Image:   "openshift/origin-hyperkube",
+					Command: []string{"/usr/bin/hyperkube", "scheduler", fmt.Sprintf("--scheduler-name=%s", "custom-scheduler")},
 				},
 			},
 		},
