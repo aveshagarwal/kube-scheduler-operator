@@ -2,6 +2,7 @@ package stub
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/aveshagarwal/kube-scheduler-operator/pkg/apis/kube-scheduler/v1alpha1"
 
@@ -60,7 +61,7 @@ func newKubeSchedulerPod(cr *v1alpha1.KubeScheduler) *corev1.Pod {
 				{
 					Name:    "kubescheduler-container",
 					Image:   "openshift/origin-hyperkube",
-					Command: []string{"/usr/bin/hyperkube", "scheduler", fmt.Sprintf("--scheduler-name=%s", "custom-scheduler")},
+					Command: []string{"/usr/bin/hyperkube", "kube-scheduler", fmt.Sprintf("--scheduler-name=%s", "custom-scheduler")},
 				},
 			},
 		},
