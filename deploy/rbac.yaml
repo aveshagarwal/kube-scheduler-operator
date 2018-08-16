@@ -1,5 +1,5 @@
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: kube-scheduler-operator
 rules:
@@ -33,14 +33,29 @@ rules:
 
 ---
 
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: default-account-kube-scheduler-operator
 subjects:
 - kind: ServiceAccount
   name: default
+  namespace: default
 roleRef:
-  kind: Role
+  kind: ClusterRole
+  name: system:kube-scheduler
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: default-account-kube-scheduler-operator-2
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: default
+roleRef:
+  kind: ClusterRole
   name: kube-scheduler-operator
   apiGroup: rbac.authorization.k8s.io
