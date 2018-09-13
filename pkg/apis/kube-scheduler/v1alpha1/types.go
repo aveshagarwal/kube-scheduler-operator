@@ -23,7 +23,15 @@ type KubeScheduler struct {
 
 type KubeSchedulerSpec struct {
 	// Fill me
+	Kubeconfig string `json:"kubeconfig"`
+	PolicyConfigFile string `json:"policyconfigfile"`
+	KubeApiContentType string `json:"kubeapicontenttype"`
+	KubeApiQps int32 `json:"kubeapiqps"`
+	LeaderElect bool  `json:"leaderelect"`
+	LeaderElectResourceLock string `json:"leaderelectresourcelock"`
+	Port int32 `json:"port"`
 }
+
 type KubeSchedulerStatus struct {
 	// Fill me
 }
