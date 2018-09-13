@@ -23,7 +23,7 @@ type KubeScheduler struct {
 
 type KubeSchedulerSpec struct {
 	// Fill me
-	Kubeconfig string `json:"kubeconfig"`
+	// PolicyConfigFile is what we have currently in 3.11, so keeping it as is for compatibility
 	PolicyConfigFile string `json:"policyconfigfile"`
 	KubeApiContentType string `json:"kubeapicontenttype"`
 	KubeApiQps int32 `json:"kubeapiqps"`
