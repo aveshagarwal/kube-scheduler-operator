@@ -22,8 +22,10 @@ type KubeScheduler struct {
 }
 
 type KubeSchedulerSpec struct {
-	// Fill me
+	ConfigFileConfigMapName string            `json:"ConfigFileConfigMapName"`
+	NodeSelector            map[string]string `json:"nodeSelector,omitempty"`
 }
+
 type KubeSchedulerStatus struct {
 	// Fill me
 }
